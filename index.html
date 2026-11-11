@@ -1,1 +1,98 @@
 
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SO‘ZMEZON — Imlo lug‘ati</title>
+<style>
+* {box-sizing:border-box}
+body {
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#f3f7f5;
+ color:#183b32;
+}
+header {
+ background:#174c3d;
+ color:white;
+ padding:30px 20px;
+ text-align:center;
+}
+header h1 {font-size:34px;margin:0 0 10px}
+header p {margin:0;color:#d7e9df}
+main {
+ max-width:700px;
+ margin:35px auto;
+ padding:20px;
+}
+.search {
+ display:flex;
+ gap:10px;
+}
+input {
+ flex:1;
+ min-width:0;
+ padding:15px;
+ border:1px solid #b8cfc4;
+ border-radius:10px;
+ font-size:16px;
+}
+button {
+ border:0;
+ border-radius:10px;
+ padding:14px 20px;
+ background:#174c3d;
+ color:white;
+ font-size:16px;
+ cursor:pointer;
+}
+.card {
+ margin-top:25px;
+ padding:25px;
+ background:white;
+ border-radius:15px;
+ box-shadow:0 3px 15px #0000000d;
+}
+#result {line-height:1.7}
+footer {
+ text-align:center;
+ padding:25px;
+ color:#668075;
+}
+</style>
+</head>
+<body>
+<header>
+<h1>SO‘ZMEZON</h1>
+<p>So‘zning mezoni — to‘g‘ri imlo.</p>
+</header>
+<main>
+<h2>Elektron imlo lug‘ati</h2>
+<p>So‘zni kiriting va uning imlo ma’lumotlarini izlang.</p>
+<div class="search">
+<input id="word" placeholder="So‘z kiriting...">
+<button onclick="searchWord()">Izlash</button>
+</div>
+<div class="card">
+<div id="result">
+<h3>Xush kelibsiz!</h3>
+Bu yerda so‘zlarning me’yoriy yozilishi va ilmiy izohlari aks etadi.
+</div>
+</div>
+</main>
+<footer>SO‘ZMEZON © 2026</footer>
+<script>
+function searchWord() {
+ const word = document.getElementById("word").value.trim();
+ const result = document.getElementById("result");
+ if(!word) {
+ result.innerHTML="Iltimos, so‘z kiriting.";
+ return;
+ }
+ result.innerHTML="<h3>"+word+"</h3><p>Ushbu so‘z bo‘yicha lug‘at ma’lumoti hali bazaga kiritilmagan.</p><p>Ma’lumotlar ilmiy manbalar asosida to‘ldiriladi.</p>";
+}
+</script>
+</body>
+</html>
+
