@@ -83,14 +83,44 @@ Bu yerda so‘zlarning me’yoriy yozilishi va ilmiy izohlari aks etadi.
 </main>
 <footer>SO‘ZMEZON © 2026</footer>
 <script>
-function searchWord() {
- const word = document.getElementById("word").value.trim();
- const result = document.getElementById("result");
- if(!word) {
- result.innerHTML="Iltimos, so‘z kiriting.";
- return;
- }
- result.innerHTML="<h3>"+word+"</h3><p>Ushbu so‘z bo‘yicha lug‘at ma’lumoti hali bazaga kiritilmagan.</p><p>Ma’lumotlar ilmiy manbalar asosida to‘ldiriladi.</p>";
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRzPqu-nk0NskRTMTrpGYU0xgyW_HZC-Bk8kC20rAGe0MxVZWwcRjpFn5sdw4HzXynOggepYh9qV8wm/pub?output=csv";
+
+async function searchWord() {
+  const word = document.getElementById("word").value.trim().toLowerCase();
+  const result = document.getElementById("result");
+
+  if (!word) {
+    result.innerHTML = "Iltimos, so‘z kiriting.";
+    return;
+  }
+
+  result.innerHTML = "Qidirilmoqda...";
+
+  try {
+    const response = await fetch(SHEET_URL);
+    const csv = await response.text();
+
+    const rows = csv.split(/\r?\n/).slice(1);
+
+    const found = rows.find(row =>
+      row.toLowerCase().includes(word)
+    );
+
+    if (!found) {
+      result.innerHTML = "<h3>So‘z topilmadi</h3>";
+      return;
+    }
+
+    const cells = found.split(",");
+    result.innerHTML = `
+      <h3>${cells[2] || ""}</h3>
+      <p><b>Variantlari:</b> ${cells[0] || ""}, ${cells[1] || ""}</p>
+      <p><b>Izoh:</b> ${cells[3] || ""}</p>
+      <p><b>Manba:</b> ${cells[4] || ""}</p>
+    `;
+  } catch (error) {
+    result.innerHTML = "Ma’lumotni yuklashda xatolik yuz berdi.";
+  }
 }
 </script>
 </body>
